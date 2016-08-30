@@ -135,34 +135,49 @@ $(document).ready(function() {
 
     // function to add dynamic text into div canvas
     $(document).on("click", "#addText", function(e) {
-    	var input = $("<input type=\"text\" name=\"name[]\" class=\"input\" value=\"\" />");
+    	var input = $("<input type=\"text\" name=\"name[]\" class=\"input\" value=\"\" placeholder=\"hello world\" />");
     	$(".block").append(input);
+    	input.focus();
 
+    	// initialize change input text into real text when clicking enter
     	changeInputIntoText(input);
     });
 
-    $(".input").each(function(i, el) {
-    	$(el).on("click", function(e) {
-    		var input = "<input type=\"text\" name=\"name[]\" class=\"input\" value=\"" + $(el).html() + "\" />";
-			$(el).replaceWith(input);
-    	});
-    });
+    // when user click on text make it editable by change into input tag
+	editText(".input");
 });
 
 function changeInputIntoText(elem) {
 	$(elem).on("keypress", function(e) {
 		if(e.which == 13) {
-			var text = "<div class=\"text\"><span class=\"input\">" + $(elem).val() + "</span></div>";
-			$(elem).replaceWith(text);
+			if($(elem).val() == "") {
+				// if input is empty then remove text
+				$(elem).remove();
+			}
+			else {
+				// if input is not empty make it span
+				var text = $("<div class=\"text\"><span class=\"input\">" + $(elem).val() + "</span></div>");
+				$(elem).replaceWith(text);
+				text.draggable({
+		        	containment	: ".block", 
+		        	scroll		: false
+		        });
+			}
 		}
+		editText(".input");
 	});
 }
 
 function editText(elem) {
+	// loop through all text inside div canvas
 	$(elem).each(function(i, el) {
+		// when span is clicked, then change it into input text for user to edit text
 		$(el).on("click", function(e) {
-			var input = "<input type=\"text\" name=\"name[]\" class=\"input\" value=\"" + $(el).html() + "\" />";
+			var input = $("<input type=\"text\" name=\"name[]\" class=\"input\" value=\"" + $(el).html() + "\" placeholder=\"hello world\" />");
 			$(el).replaceWith(input);
+
+			// re-initialize this function, so when user press "Enter" input will change into text
+			changeInputIntoText(input);
 		});
 	});
 }
