@@ -64,12 +64,6 @@ function _destroy() {
     selected = null;
 }
 
-// Bind the functions...
-// document.getElementById('draggable-element').onmousedown = function () {
-//     _drag_init(this);
-//     return false;
-// };
-
 window.onload = function() {
 	/*
 	 * Load list of images on window load
@@ -119,24 +113,3 @@ function addImages(elem) {
 
 document.onmousemove = _move_elem;
 document.onmouseup = _destroy;
-
-$(document).ready(function() {
-	// this function is to add image into div canvas by clicking on it
-    // $(document).on("click", ".img-add", function(e) {
-    //     var src = $(this).attr("src");
-    //     var elem = $("<div class=\"container draggable\"><img src=\"" + src + "\" class=\"img-blocks img-rounded\" height=\"50\" width=\"50\" /></div>");
-    //     $(".block").append(elem);
-    //     elem.draggable({
-    //     	containment	: ".block", 
-    //     	scroll		: false
-    //     });
-    //     elem.find(".img-blocks:first").resizable();
-    //     return false;
-    // });
-
-    // this function is to remove image from div canvas by clicking on it
-    // $(document).on("click", ".img-blocks", function(e){
-    // 	$(this).remove();
-    // 	return false;
-    // })
-});

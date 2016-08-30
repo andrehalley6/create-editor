@@ -22,8 +22,11 @@ submit.addEventListener("click", function(e) {
 			// append new uploaded image into listImages
 			var ul = document.getElementById("listImages");
 			var li = document.createElement("li");
-			li.innerHTML = "<img src=\"" + response.file + "\" class=\"img-rounded block-add\" />";
+			li.innerHTML = "<img src=\"" + response.file + "\" class=\"img-rounded img-add\" />";
 			ul.appendChild(li);
+
+			// re-initialize draggable for newly added elements to DOM
+        	$(".img-add").draggable({ revert: "invalid" });
             // return true;
         }
         else {
@@ -34,35 +37,6 @@ submit.addEventListener("click", function(e) {
     
 	xhr.send(formData);
 }, false);
-
-// // function to add input text
-// var addText = document.getElementById("addText");
-// addText.addEventListener("click", function(e) {
-// 	var input = document.createElement("input");
-// 	input.setAttribute("value", "");
-// 	input.setAttribute("type", "text");
-// 	input.setAttribute("class", "input");
-// 	input.setAttribute("name", "input[]");
-
-// 	var block = document.getElementById("canvas");
-// 	block.appendChild(input);
-// }, false);
-
-// // function to change input text into label
-// // var changeText = document.getElementsByClassName("input");
-// var changeText = document.getElementsByName("input");
-// console.log(changeText);
-// for(var i = 0; i < changeText.length; i++) {
-// 	console.log(changeText[i]);
-// 	changeText[i].addEventListener("keypress", function(e) {
-// 		if(e.which == 13) {
-// 			alert("enter press");
-// 			console.log(changeText[i]);
-// 			var newElem = document.createElement("div");
-// 			newElem.innerHTML = "<p class=\"label\">" + changeText[i].value + "</p>";
-// 		}
-// 	});
-// }
 
 window.onload = function() {
 	/*
@@ -155,26 +129,30 @@ function changeInputIntoText(elem) {
 				$(elem).remove();
 			}
 			else {
-				// if input is not empty make it span
+				// if input is not empty make it text inside span tag
 				var text = $("<div class=\"text\"><span class=\"input\">" + $(elem).val() + "</span></div>");
 				$(elem).replaceWith(text);
+
+				// make text draggable
 				text.draggable({
 		        	containment	: ".block", 
 		        	scroll		: false
 		        });
 			}
+			// enable edit text when span is clicked
+			editText(".input");
 		}
-		editText(".input");
 	});
 }
 
-function editText(elem) {
+function editText(selector) {
 	// loop through all text inside div canvas
-	$(elem).each(function(i, el) {
+	$(selector).each(function(i, el) {
 		// when span is clicked, then change it into input text for user to edit text
 		$(el).on("click", function(e) {
 			var input = $("<input type=\"text\" name=\"name[]\" class=\"input\" value=\"" + $(el).html() + "\" placeholder=\"hello world\" />");
 			$(el).replaceWith(input);
+			input.focus();
 
 			// re-initialize this function, so when user press "Enter" input will change into text
 			changeInputIntoText(input);

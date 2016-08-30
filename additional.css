@@ -21,4 +21,5 @@ ul > li > img.img-rounded {
 
 .input {
 	margin: 0.5em;
+	cursor: pointer;
 }
