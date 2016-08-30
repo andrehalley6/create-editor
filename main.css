@@ -34,7 +34,7 @@ html, body {
   height: 50px;
   margin-right: 5px;
   float: left;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .assets .image ul li img {
   width: 100%;
